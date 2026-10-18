@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Robert Lancer</title>
+    <meta name="description" content="Robert Lancer, software engineer." />
+    <meta name="theme-color" content="#e6ebe4" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Anybody:wdth,wght@75,500&family=Atkinson+Hyperlegible&family=Fragment+Mono&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div class="lance" aria-hidden="true"></div>
+    <p class="banner">Staging</p>
+    <main class="page">
+      <p class="mark">Software engineer</p>
+      <h1 class="name">Robert<br />Lancer</h1>
+      <p class="lede">A small site for the work. This is where it starts.</p>
+      <p class="links">
+        <a href="https://github.com/rlancer">github.com/rlancer</a>
+      </p>
+    </main>
+    <script>
+      if (location.hostname.includes("staging")) {
+        document.documentElement.dataset.env = "staging";
+      }
+    </script>
+  </body>
+</html>

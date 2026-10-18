@@ -1,0 +1,157 @@
+:root {
+  --field: #e6ebe4;
+  --ink: #17211c;
+  --quiet: #536058;
+  --lance: #1d4ed8;
+  --focus: #1d4ed8;
+  color-scheme: light;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+}
+
+body {
+  background: var(--field);
+  color: var(--ink);
+  font-family: "Atkinson Hyperlegible", "Segoe UI", sans-serif;
+}
+
+.lance {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: max(1.25rem, 8vw);
+  width: 3px;
+  background: var(--lance);
+  transform-origin: top center;
+  animation: plant 700ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+.banner {
+  display: none;
+  position: fixed;
+  top: 1.25rem;
+  right: 1.25rem;
+  margin: 0;
+  font-family: "Fragment Mono", ui-monospace, monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--lance);
+}
+
+html[data-env="staging"] .banner {
+  display: block;
+}
+
+.page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 5rem 1.5rem 3.5rem calc(max(1.25rem, 8vw) + 2.4rem);
+}
+
+.mark {
+  margin: 0 0 1.1rem;
+  font-family: "Fragment Mono", ui-monospace, monospace;
+  font-size: 0.78rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--quiet);
+}
+
+.name {
+  margin: 0;
+  font-family: Anybody, "Arial Narrow", "Segoe UI", sans-serif;
+  font-weight: 500;
+  font-stretch: 75%;
+  font-size: clamp(4.4rem, 12vw, 8.25rem);
+  line-height: 0.8;
+  letter-spacing: -0.045em;
+}
+
+.lede {
+  margin: 1.6rem 0 0;
+  max-width: 22rem;
+  font-size: 1.2rem;
+  line-height: 1.45;
+}
+
+.links {
+  margin: 2.4rem 0 0;
+  font-family: "Fragment Mono", ui-monospace, monospace;
+  font-size: 0.92rem;
+}
+
+a {
+  color: inherit;
+  text-underline-offset: 0.22em;
+}
+
+a:hover {
+  color: var(--lance);
+}
+
+a:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 4px;
+}
+
+.missing .lede {
+  max-width: 26rem;
+}
+
+@keyframes plant {
+  from {
+    transform: scaleY(0);
+  }
+  to {
+    transform: scaleY(1);
+  }
+}
+
+@media (max-width: 700px) {
+  .lance {
+    position: absolute;
+    top: 1.4rem;
+    left: 1.25rem;
+    bottom: auto;
+    width: 4.5rem;
+    height: 3px;
+    transform-origin: left center;
+    animation-name: draw;
+  }
+
+  .page {
+    padding: 4.5rem 1.25rem 3rem;
+  }
+
+  .banner {
+    top: auto;
+    right: 1.25rem;
+    bottom: 1.25rem;
+  }
+}
+
+@keyframes draw {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lance {
+    animation: none;
+  }
+}
