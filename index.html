@@ -8,33 +8,60 @@
       name="description"
       content="Robert Lancer, software engineer. Lobster, Sandglass, and Letter Blocks."
     />
-    <meta name="theme-color" content="#e6ebe4" />
+    <meta name="theme-color" content="#07060b" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Anybody:wdth,wght@75,500&family=Atkinson+Hyperlegible&family=Fragment+Mono&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="/styles.css" />
   </head>
   <body>
-    <div class="lance" aria-hidden="true"></div>
+    <div class="stars" aria-hidden="true"></div>
     <p class="banner">Staging</p>
     <main class="page">
-      <header class="hero">
-        <p class="mark">Software engineer</p>
-        <h1 class="name">Robert<br />Lancer</h1>
-        <p class="lede">A small site for the work.</p>
-        <p class="links">
-          <a href="https://github.com/rlancer">github.com/rlancer</a>
-        </p>
+      <header class="marquee">
+        <p class="eyebrow">Software engineer</p>
+        <h1>Robert<br />Lancer</h1>
+        <p class="tag">Defend the work. Fire at will.</p>
       </header>
+
+      <section class="cabinet" aria-label="Arcade cabinet">
+        <div class="bezel">
+          <div class="screen">
+            <div class="hud">
+              <p>SCORE <span id="score">0000</span></p>
+              <p>HI <span id="hi">0000</span></p>
+              <p>LIVES <span id="lives">3</span></p>
+            </div>
+            <canvas id="playfield" width="224" height="240" aria-label="Playable space defense. Move with the arrow keys and fire with the space bar."></canvas>
+            <div class="scanlines" aria-hidden="true"></div>
+            <div class="glare" aria-hidden="true"></div>
+            <div class="overlay" id="overlay">
+              <p class="overlay-kicker" id="overlay-kicker">Credit 00</p>
+              <p class="overlay-title" id="overlay-title">Press start</p>
+              <button type="button" id="start" class="coin">Insert coin</button>
+            </div>
+          </div>
+          <div class="controls">
+            <button type="button" id="left" aria-label="Move left">◀</button>
+            <button type="button" id="fire" aria-label="Fire">Fire</button>
+            <button type="button" id="right" aria-label="Move right">▶</button>
+            <button type="button" id="mute" aria-pressed="false">Sound on</button>
+          </div>
+          <p class="hint">Arrows move. Space fires. M mutes.</p>
+        </div>
+        <div class="grill" aria-hidden="true"></div>
+      </section>
+
       <section class="work" aria-labelledby="work-heading">
-        <h2 id="work-heading" class="mark">Work</h2>
+        <h2 id="work-heading">Bases</h2>
         <ul class="work-list">
           <li>
             <a class="work-link" href="https://lobster.mp">
+              <span class="pts">300</span>
               <span class="work-name">Lobster</span>
               <span class="work-host">lobster.mp</span>
               <span class="work-line">Ask the options tape. Answers come from the market.</span>
@@ -42,6 +69,7 @@
           </li>
           <li>
             <a class="work-link" href="https://sandglass.robertlancer.com">
+              <span class="pts">200</span>
               <span class="work-name">Sandglass</span>
               <span class="work-host">sandglass.robertlancer.com</span>
               <span class="work-line">Four homages to Prince of Persia (1989), each built from the same brief.</span>
@@ -49,12 +77,16 @@
           </li>
           <li>
             <a class="work-link" href="https://letterblocks.robertlancer.com">
+              <span class="pts">100</span>
               <span class="work-name">Letter Blocks</span>
               <span class="work-host">letterblocks.robertlancer.com</span>
               <span class="work-line">Listen, then tap the letter, the word, or the sum.</span>
             </a>
           </li>
         </ul>
+        <p class="manual">
+          <a href="https://github.com/rlancer">github.com/rlancer</a>
+        </p>
       </section>
     </main>
     <script>
@@ -62,5 +94,6 @@
         document.documentElement.dataset.env = "staging";
       }
     </script>
+    <script type="module" src="/invaders.js"></script>
   </body>
 </html>
