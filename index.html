@@ -4,7 +4,10 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Robert Lancer</title>
-    <meta name="description" content="Robert Lancer, software engineer." />
+    <meta
+      name="description"
+      content="Robert Lancer, software engineer. Lobster, Sandglass, and Letter Blocks."
+    />
     <meta name="theme-color" content="#e6ebe4" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -19,12 +22,40 @@
     <div class="lance" aria-hidden="true"></div>
     <p class="banner">Staging</p>
     <main class="page">
-      <p class="mark">Software engineer</p>
-      <h1 class="name">Robert<br />Lancer</h1>
-      <p class="lede">A small site for the work. This is where it starts.</p>
-      <p class="links">
-        <a href="https://github.com/rlancer">github.com/rlancer</a>
-      </p>
+      <header class="hero">
+        <p class="mark">Software engineer</p>
+        <h1 class="name">Robert<br />Lancer</h1>
+        <p class="lede">A small site for the work.</p>
+        <p class="links">
+          <a href="https://github.com/rlancer">github.com/rlancer</a>
+        </p>
+      </header>
+      <section class="work" aria-labelledby="work-heading">
+        <h2 id="work-heading" class="mark">Work</h2>
+        <ul class="work-list">
+          <li>
+            <a class="work-link" href="https://lobster.mp">
+              <span class="work-name">Lobster</span>
+              <span class="work-host">lobster.mp</span>
+              <span class="work-line">Ask the options tape. Answers come from the market.</span>
+            </a>
+          </li>
+          <li>
+            <a class="work-link" href="https://sandglass.robertlancer.workers.dev">
+              <span class="work-name">Sandglass</span>
+              <span class="work-host">Play</span>
+              <span class="work-line">Four homages to Prince of Persia (1989), each built from the same brief.</span>
+            </a>
+          </li>
+          <li>
+            <a class="work-link" href="https://letter-game.robertlancer.workers.dev">
+              <span class="work-name">Letter Blocks</span>
+              <span class="work-host">Play</span>
+              <span class="work-line">Listen, then tap the letter, the word, or the sum.</span>
+            </a>
+          </li>
+        </ul>
+      </section>
     </main>
     <script>
       if (location.hostname.includes("staging")) {

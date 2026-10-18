@@ -52,11 +52,15 @@ html[data-env="staging"] .banner {
 }
 
 .page {
+  padding: 0 1.5rem 4.5rem calc(max(1.25rem, 8vw) + 2.4rem);
+}
+
+.hero {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 5rem 1.5rem 3.5rem calc(max(1.25rem, 8vw) + 2.4rem);
+  padding: 5rem 0 4rem;
 }
 
 .mark {
@@ -105,8 +109,71 @@ a:focus-visible {
   outline-offset: 4px;
 }
 
+.missing {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-top: 5rem;
+  padding-bottom: 3.5rem;
+}
+
 .missing .lede {
   max-width: 26rem;
+}
+
+.work {
+  max-width: 42rem;
+  padding-bottom: 2rem;
+}
+
+.work-list {
+  list-style: none;
+  margin: 0.2rem 0 0;
+  padding: 0;
+  border-top: 1px solid #c5d0c6;
+}
+
+.work-list li {
+  border-bottom: 1px solid #c5d0c6;
+}
+
+.work-link {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  column-gap: 1.5rem;
+  row-gap: 0.55rem;
+  padding: 1.35rem 0 1.45rem;
+  text-decoration: none;
+}
+
+.work-name {
+  font-family: Anybody, "Arial Narrow", "Segoe UI", sans-serif;
+  font-weight: 500;
+  font-stretch: 78%;
+  font-size: clamp(2.15rem, 4vw, 3.1rem);
+  line-height: 0.9;
+  letter-spacing: -0.04em;
+}
+
+.work-host {
+  align-self: end;
+  font-family: "Fragment Mono", ui-monospace, monospace;
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--quiet);
+}
+
+.work-line {
+  grid-column: 1 / -1;
+  max-width: 34rem;
+  font-size: 1.05rem;
+  line-height: 1.45;
+}
+
+.work-link:hover .work-host {
+  color: var(--lance);
 }
 
 @keyframes plant {
@@ -131,7 +198,22 @@ a:focus-visible {
   }
 
   .page {
-    padding: 4.5rem 1.25rem 3rem;
+    padding: 0 1.25rem 3rem;
+  }
+
+  .hero,
+  .missing {
+    min-height: 100svh;
+    padding-top: 4.5rem;
+    padding-bottom: 3rem;
+  }
+
+  .work-link {
+    grid-template-columns: 1fr;
+  }
+
+  .work-host {
+    align-self: start;
   }
 
   .banner {
