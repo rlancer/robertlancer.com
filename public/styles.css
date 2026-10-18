@@ -160,8 +160,7 @@ a:focus-visible {
   align-self: end;
   font-family: "Fragment Mono", ui-monospace, monospace;
   font-size: 0.78rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  letter-spacing: 0.02em;
   color: var(--quiet);
 }
 
