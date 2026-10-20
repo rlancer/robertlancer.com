@@ -240,6 +240,7 @@ html[data-env="staging"] .banner {
 .controls button:focus-visible,
 .work-link:hover,
 .work-link:focus-visible,
+.manual a:hover,
 .manual a:focus-visible {
   outline: 2px solid var(--cyan);
   outline-offset: 3px;
@@ -260,6 +261,9 @@ html[data-env="staging"] .banner {
   min-height: 2.7rem;
   font-size: 0.62rem;
   cursor: pointer;
+  touch-action: manipulation;
+  user-select: none;
+  -webkit-user-select: none;
 }
 
 .controls button[aria-pressed="true"] {
@@ -386,6 +390,30 @@ html[data-env="staging"] .banner {
       "pts name"
       "host host"
       "line line";
+  }
+}
+
+@media (min-width: 960px) {
+  .page:not(.missing) {
+    width: min(1100px, calc(100% - 3rem));
+    display: grid;
+    grid-template-columns: minmax(0, 520px) minmax(0, 1fr);
+    column-gap: 2rem;
+    align-items: start;
+  }
+
+  .page:not(.missing) .marquee {
+    grid-column: 1 / -1;
+  }
+
+  .work {
+    margin-top: 0;
+  }
+}
+
+@media (hover: none) and (pointer: coarse) {
+  .hint {
+    display: none;
   }
 }
 

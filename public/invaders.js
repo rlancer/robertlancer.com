@@ -40,6 +40,22 @@ const muteBtn = document.querySelector("#mute");
 const keys = { left: false, right: false, fire: false };
 const hiKey = "lancer-invaders-hi";
 
+function loadHi() {
+  try {
+    return Number(localStorage.getItem(hiKey)) || 0;
+  } catch {
+    return 0;
+  }
+}
+
+function saveHi(value) {
+  try {
+    localStorage.setItem(hiKey, String(value));
+  } catch {
+    // Storage is unavailable; the high score lasts for this visit only.
+  }
+}
+
 const sfx = {
   ctx: null,
   muted: false,
@@ -116,7 +132,7 @@ const sfx = {
 const state = {
   mode: "attract",
   score: 0,
-  hi: Number(localStorage.getItem(hiKey) || 0),
+  hi: loadHi(),
   lives: 3,
   wave: 1,
   frame: 0,
@@ -197,7 +213,10 @@ function march() {
     state.form.x = next.x;
   }
   state.frame ^= 1;
-  sfx.march();
+  if (state.mode === "play") {
+    sfx.march();
+    if (state.ufo) sfx.ufo();
+  }
   if (state.mode !== "play" && state.form.y > 150) {
     state.form.y = 28;
     state.form.x = 18;
@@ -243,7 +262,7 @@ function addScore(n) {
   state.score += n;
   if (state.score > state.hi) {
     state.hi = state.score;
-    localStorage.setItem(hiKey, String(state.hi));
+    saveHi(state.hi);
   }
 }
 
@@ -254,16 +273,16 @@ function loseLife() {
   sfx.die();
   burst(state.player.x + 5, 214, "#fff");
   if (state.lives <= 0) {
-    showOverlay("Game over", "Press start");
     state.mode = "over";
+    showOverlay(`Score ${pad(state.score)}`, "Game over", "Press start");
   }
 }
 
-function showOverlay(title, button) {
+function showOverlay(kicker, title, button) {
   overlay.hidden = false;
+  overlayKicker.textContent = kicker;
   overlayTitle.textContent = title;
   startBtn.textContent = button;
-  overlayKicker.textContent = state.mode === "attract" ? "Credit 00" : `Wave ${state.wave}`;
 }
 
 function hideOverlay() {
@@ -282,9 +301,8 @@ function startGame() {
 function nextWave() {
   state.wave += 1;
   if (state.wave > 3) {
-    sfx.clear();
-    showOverlay("Earth stands", "Play again");
     state.mode = "over";
+    showOverlay(`Score ${pad(state.score)}`, "Earth stands", "Play again");
     return;
   }
   resetWave(true);
@@ -338,7 +356,6 @@ function update(dt) {
   }
   if (state.ufo) {
     state.ufo.x += 46 * dt * state.ufo.dir;
-    if (state.frame === 0) sfx.ufo();
     if (state.ufo.x > W + 8) state.ufo = null;
   }
 
@@ -372,8 +389,8 @@ function update(dt) {
   if (state.mode === "play" && aliveInvaders().length && bounds(state.form).bottom >= 206) {
     state.lives = 0;
     sfx.die();
-    showOverlay("Game over", "Press start");
     state.mode = "over";
+    showOverlay(`Score ${pad(state.score)}`, "Game over", "Press start");
   }
 
   state.particles.forEach((p) => {
@@ -433,7 +450,6 @@ function draw() {
   scoreEl.textContent = pad(state.score);
   hiEl.textContent = pad(state.hi);
   livesEl.textContent = String(Math.max(0, state.lives));
-  overlayKicker.textContent = state.mode === "play" ? `Wave ${state.wave}` : state.mode === "over" ? "Credit 00" : "Credit 00";
 }
 
 function frame(now) {
@@ -463,23 +479,48 @@ hold(document.querySelector("#left"), "left");
 hold(document.querySelector("#right"), "right");
 hold(document.querySelector("#fire"), "fire");
 
+function onScreen() {
+  const box = canvas.getBoundingClientRect();
+  return box.bottom > 0 && box.top < window.innerHeight;
+}
+
+function control(key) {
+  if (key === "ArrowLeft" || key === "a" || key === "A") return "left";
+  if (key === "ArrowRight" || key === "d" || key === "D") return "right";
+  if (key === " " || key === "ArrowUp") return "fire";
+  return null;
+}
+
 startBtn.addEventListener("click", startGame);
 window.addEventListener("keydown", (event) => {
-  if (event.key === "ArrowLeft" || event.key === "a") keys.left = true;
-  if (event.key === "ArrowRight" || event.key === "d") keys.right = true;
-  if (event.key === " " || event.key === "ArrowUp") {
-    event.preventDefault();
-    keys.fire = true;
-    if (state.mode !== "play") startGame();
-    else fire();
+  if (event.ctrlKey || event.metaKey || event.altKey) return;
+  if ((event.key === "m" || event.key === "M") && !event.repeat) {
+    toggleMute();
+    return;
   }
-  if (event.key === "Enter" && state.mode !== "play") startGame();
-  if (event.key === "m" || event.key === "M") toggleMute();
+  const playing = state.mode === "play";
+  const focused = event.target.closest?.("a, button, input, textarea, select");
+  if (!playing && (focused || !onScreen())) return;
+
+  const key = control(event.key);
+  if (key) {
+    event.preventDefault();
+    keys[key] = true;
+    if (key === "fire" && !event.repeat) {
+      if (playing) fire();
+      else startGame();
+    }
+  }
+  if (event.key === "Enter" && !playing && !event.repeat) startGame();
 });
 window.addEventListener("keyup", (event) => {
-  if (event.key === "ArrowLeft" || event.key === "a") keys.left = false;
-  if (event.key === "ArrowRight" || event.key === "d") keys.right = false;
-  if (event.key === " " || event.key === "ArrowUp") keys.fire = false;
+  const key = control(event.key);
+  if (key) keys[key] = false;
+});
+window.addEventListener("blur", () => {
+  keys.left = false;
+  keys.right = false;
+  keys.fire = false;
 });
 
 function toggleMute() {
@@ -491,6 +532,6 @@ function toggleMute() {
 muteBtn.addEventListener("click", toggleMute);
 
 resetWave(false);
-showOverlay("Press start", "Insert coin");
+showOverlay("Credit 00", "Press start", "Insert coin");
 hiEl.textContent = pad(state.hi);
 requestAnimationFrame(frame);
